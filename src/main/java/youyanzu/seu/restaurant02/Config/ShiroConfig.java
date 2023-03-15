@@ -1,5 +1,6 @@
 package youyanzu.seu.restaurant02.Config;
 
+
 import youyanzu.seu.restaurant02.Realm.authRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
