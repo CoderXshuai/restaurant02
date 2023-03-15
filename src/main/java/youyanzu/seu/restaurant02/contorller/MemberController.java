@@ -1,24 +1,20 @@
-package com.wang.rest_pro.contorller;
+package youyanzu.seu.restaurant02.contorller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wang.rest_pro.Enums.ResultEnum;
-import com.wang.rest_pro.Utils.ResultUtil;
-import com.wang.rest_pro.entity.Member;
-import com.wang.rest_pro.entity.MemberCategory;
-import com.wang.rest_pro.entity.Result;
-import com.wang.rest_pro.mapper.MemberCategoryMapper;
-import com.wang.rest_pro.service.IMemberService;
-import com.wang.rest_pro.service.IMemberCategoryService;
+import youyanzu.seu.restaurant02.Enums.ResultEnum;
+import youyanzu.seu.restaurant02.Utils.ResultUtil;
+import youyanzu.seu.restaurant02.entity.Member;
+import youyanzu.seu.restaurant02.entity.Result;
+import youyanzu.seu.restaurant02.service.IMemberService;
+import youyanzu.seu.restaurant02.service.IMemberCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,9 +34,9 @@ public class MemberController {
     private IMemberCategoryService memberCategoryService;
 
     @RequestMapping(value = "/memberList", method = RequestMethod.GET)
-    public Result<List<Member>> memberList(@RequestParam("page_num") int pageNum, @RequestParam("page_size")int pageSize,
-                                           @RequestParam(value = "member_code", required = false) String memberCode,@RequestParam(value = "m_name", required = false) String mName,
-                                           @RequestParam(value ="m_gender", required = false) String mGender,@RequestParam(value ="m_birthday", required = false) String mBirthday,
+    public Result memberList(@RequestParam("page_num") int pageNum, @RequestParam("page_size")int pageSize,
+                                           @RequestParam(value = "member_code", required = false) String memberCode, @RequestParam(value = "m_name", required = false) String mName,
+                                           @RequestParam(value ="m_gender", required = false) String mGender, @RequestParam(value ="m_birthday", required = false) String mBirthday,
                                            @RequestParam(value ="mc_name", required = false) String mcName){
         //创建member对象
         Member member = new Member();
@@ -54,13 +50,8 @@ public class MemberController {
         //调用service进行查询
         Page<Member> list = memberService.getList(pageNum, pageSize, member);
         List<Member> records = list.getRecords();
-        Result<List<Member>> result = new Result<>();
         //封装结果
-        result.setData(records);
-        result.setCode(ResultEnum.SUCCESS.getCode());
-        result.setMsg(ResultEnum.SUCCESS.getMsg());
-        result.setCount(list.getTotal());
-        return result;
+        return ResultUtil.success(records, list.getTotal());
     }
 
     @RequestMapping(value = "/addMember",method = RequestMethod.POST)
@@ -78,20 +69,14 @@ public class MemberController {
         Result<String> result = new Result<>();
         //判断是否存在
         if(memberService.memberExist(member.getMemberCode())){
-            result.setCode(ResultEnum.USER_IS_EXIST.getCode());
-            result.setMsg(ResultEnum.USER_IS_EXIST.getMsg());
-            return result;
+            return ResultUtil.error(ResultEnum.USER_IS_EXIST);
         }
         else {//判断是否添加成功
             if(memberService.addMember(member)){
-                result.setCode(ResultEnum.SUCCESS.getCode());
-                result.setMsg(ResultEnum.SUCCESS.getMsg());
-                return result;
+                return ResultUtil.success();
             }
             else {
-                result.setCode(ResultEnum.UNKNOWN_ERROR.getCode());
-                result.setMsg(ResultEnum.UNKNOWN_ERROR.getMsg());
-                return result;
+                return ResultUtil.error(ResultEnum.UNKNOWN_ERROR);
             }
         }
     }
@@ -128,10 +113,7 @@ public class MemberController {
         Result<Member> result = new Result<>();
         Member member = memberService.getMemberByMemberCode(memberCode);
         if(member != null){
-            result.setMsg(ResultEnum.SUCCESS.getMsg());
-            result.setCode(ResultEnum.SUCCESS.getCode());
-            result.setData(member);
-            return result;
+            return ResultUtil.success(member);
         }
         else
             return ResultUtil.error(ResultEnum.UNKNOWN_ERROR);
