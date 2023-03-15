@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("youyanzu.seu.restaurant.mapper")
 
 public class MybatisPlusConfig {
+
     @Bean
     public PaginationInterceptor paginationInterceptor(){
         return new PaginationInterceptor();
