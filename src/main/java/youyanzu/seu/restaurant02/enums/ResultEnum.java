@@ -6,7 +6,9 @@ package youyanzu.seu.restaurant02.enums;
  */
 
 public enum ResultEnum {
-
+    /**
+     * 返回结果枚举
+     */
     UNKNOWN_ERROR(-1, "未知错误!"),
     SUCCESS(200, "成功!"),
     USER_NO_FOUND(101, "账号未找到!"),
@@ -30,7 +32,7 @@ public enum ResultEnum {
     private Integer code;
     private String msg;
 
-    ResultEnum(Integer code, String msg) {
+    private ResultEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

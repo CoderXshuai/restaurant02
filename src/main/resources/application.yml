@@ -1,0 +1,19 @@
+server:
+  servlet:
+    context-path: restaurant
+spring:
+  #数据源配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: restaurant
+    password: root
+    url: jdbc:mysql://124.70.128.29:3306/restaurant?useUnicode=true&characterEncoding=utf-8
+    hikari:
+      read-only: false
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      maximum-pool-size: 60
+      minimum-idle: 10
+  transaction:
+    rollback-on-commit-failure: true
