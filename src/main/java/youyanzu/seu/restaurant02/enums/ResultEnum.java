@@ -1,14 +1,13 @@
-package youyanzu.seu.restaurant02.enums;
+package youyanzu.seu.restaurant02.Enums;
 
 /**
- * @author CoderXshuai
- * @date 2023/3/14 20:47
+ * Created with IDEA
+ * author:LiuJing
+ * Date:2018/10/2
+ * Time:20:11
  */
 
 public enum ResultEnum {
-    /**
-     * 返回结果枚举
-     */
     UNKNOWN_ERROR(-1, "未知错误!"),
     SUCCESS(200, "成功!"),
     USER_NO_FOUND(101, "账号未找到!"),
@@ -32,7 +31,7 @@ public enum ResultEnum {
     private Integer code;
     private String msg;
 
-    private ResultEnum(Integer code, String msg) {
+    ResultEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

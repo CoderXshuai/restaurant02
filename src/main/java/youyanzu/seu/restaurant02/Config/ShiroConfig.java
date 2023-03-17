@@ -1,13 +1,14 @@
 package youyanzu.seu.restaurant02.Config;
 
 
-import youyanzu.seu.restaurant02.Realm.authRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import youyanzu.seu.restaurant02.Realm.authRealm;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 @Configuration
@@ -16,6 +17,7 @@ public class ShiroConfig {
     @Bean(name = "shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("getDefaultWebSecurityManager") DefaultWebSecurityManager manager){
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+        bean.setSecurityManager(manager);
         Map<String, String> map = new LinkedHashMap<>();
         /*
         /anon 无需认证
@@ -24,12 +26,10 @@ public class ShiroConfig {
         perms 拥有权限
         role 拥有角色
          */
+//        map.put("/**","authc");
         map.put("/user/login", "anon");
-        map.put("/user/dologin", "anon");
-        map.put("/user/test", "anon");
-        map.put("/user/hi", "perms[user:download]");
+//        map.put("/**","authc");
         bean.setFilterChainDefinitionMap(map);
-        bean.setSecurityManager(manager);
         bean.setLoginUrl("/user/login");
         return bean;
     }

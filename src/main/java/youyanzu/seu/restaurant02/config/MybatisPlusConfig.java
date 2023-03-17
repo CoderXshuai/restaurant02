@@ -1,4 +1,4 @@
-package youyanzu.seu.restaurant02.config;
+package youyanzu.seu.restaurant02.Config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -7,17 +7,10 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author CoderXshuai
- * @date 2023/3/16 21:54
- * @description MybatisPlus配置类
- */
 @Configuration
-@MapperScan("youyanzu.seu.restaurant02.mapper")
+@MapperScan("youyanzu.seu.restaurant.mapper")
+
 public class MybatisPlusConfig {
-    /**
-     * MybatisPlus分页插件
-     */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
