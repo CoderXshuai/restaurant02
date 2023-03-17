@@ -68,12 +68,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
     @Override
-    public boolean editMember(Long memberId, Member member) {
+    public boolean editMember(String loginCode, Member member) {
         int i = 0;
         LocalDateTime now = LocalDateTime.now();
         member.setModifyTime(now);
         UpdateWrapper<Member> wrapper = new UpdateWrapper<>();
-        wrapper.eq("member_id", memberId);
+        wrapper.eq("login_code", loginCode);
         i = mapper.update(member, wrapper);
         return i == 1;
     }

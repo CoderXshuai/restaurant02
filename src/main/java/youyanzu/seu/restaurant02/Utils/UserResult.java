@@ -1,16 +1,17 @@
-package youyanzu.seu.restaurant02.entity;
+package youyanzu.seu.restaurant02.Utils;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
-import youyanzu.seu.restaurant02.Utils.UserResult;
+import youyanzu.seu.restaurant02.entity.SysUser;
 import youyanzu.seu.restaurant02.service.ISysRoleService;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -21,17 +22,14 @@ import youyanzu.seu.restaurant02.service.ISysRoleService;
  * @since 2023-03-14
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-public class SysUser implements Serializable {
+public class UserResult {
 
 
-    private static final long serialVersionUID = 1L;
 
     /**
      * 用户id
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
+
     private Long userId;
 
     /**
@@ -47,6 +45,7 @@ public class SysUser implements Serializable {
     /**
      * 用户姓名
      */
+    private String roleName;
     private int roleId;
     private String name;
 

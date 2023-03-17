@@ -16,6 +16,7 @@ public class ShiroConfig {
     @Bean(name = "shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("getDefaultWebSecurityManager") DefaultWebSecurityManager manager){
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+        bean.setSecurityManager(manager);
         Map<String, String> map = new LinkedHashMap<>();
         /*
         /anon 无需认证
@@ -24,12 +25,10 @@ public class ShiroConfig {
         perms 拥有权限
         role 拥有角色
          */
+//        map.put("/**","authc");
         map.put("/user/login", "anon");
-        map.put("/user/dologin", "anon");
-        map.put("/user/test", "anon");
-        map.put("/user/hi", "perms[user:download]");
+//        map.put("/**","authc");
         bean.setFilterChainDefinitionMap(map);
-        bean.setSecurityManager(manager);
         bean.setLoginUrl("/user/login");
         return bean;
     }

@@ -16,7 +16,7 @@ public interface IMemberService extends IService<Member> {
     Page<Member> getList(int pageNum, int pageSize, Member member);
     boolean memberExist(String memberCode);
     boolean addMember(Member member);
-    boolean editMember(Long memberId, Member member);
+    boolean editMember(String loginCode, Member member);
     boolean deleteMemberById(String memberId);
     Member getMemberByMemberCode(String memberCode);
 

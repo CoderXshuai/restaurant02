@@ -1,7 +1,10 @@
 package youyanzu.seu.restaurant02.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import youyanzu.seu.restaurant02.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -19,4 +22,6 @@ public interface ISysUserService extends IService<SysUser> {
     boolean editUser(String username, SysUser user);
     boolean deleteByUsername(String username);
     boolean resetPassword(String username, String password);
+
+    Page<SysUser> getList(int pageNum, int pageSize, SysUser user, String[] roles);
 }

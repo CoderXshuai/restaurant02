@@ -1,0 +1,57 @@
+server:
+  port: 8081
+
+#
+#pagehelper:
+#  helper-dialect: mysql
+#  reasonable: true
+#  support-methods-arguments: true
+
+spring:
+  application:
+    name: market
+  aop:
+    proxy-target-class: true
+
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root123
+    url: jdbc:mysql:///restaurant?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    druid:
+      validation-query: SELECT 1 FROM DUAL
+      initial-size: 10
+      min-idle: 10
+      max-active: 200
+      min-evictable-idle-time-millis: 300000
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 30000
+      pool-prepared-statements: true
+      max-open-prepared-statements: 100
+
+mybatis-plus:
+  type-aliases-package: youyanzu.seu.restaurant02.entity
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: flag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  logging:
+    config:
+      classpath: logback.xml
+
+shiro:
+  loginUrl: /user/login
+
+

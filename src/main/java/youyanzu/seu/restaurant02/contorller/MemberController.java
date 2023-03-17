@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,39 +35,51 @@ public class MemberController {
     private IMemberCategoryService memberCategoryService;
 
     @RequestMapping(value = "/memberList", method = RequestMethod.GET)
-    public Result memberList(@RequestParam("page_num") int pageNum, @RequestParam("page_size")int pageSize,
-                                           @RequestParam(value = "member_code", required = false) String memberCode, @RequestParam(value = "m_name", required = false) String mName,
-                                           @RequestParam(value ="m_gender", required = false) String mGender, @RequestParam(value ="m_birthday", required = false) String mBirthday,
-                                           @RequestParam(value ="mc_name", required = false) String mcName){
+    public Result memberList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize")int pageSize,
+                                           @RequestParam(value = "memberCode", required = false) String memberCode, @RequestParam(value = "mName", required = false) String mName,
+                                           @RequestParam(value ="mGender", required = false) String mGender, @RequestParam(value ="mBirthday", required = false) String mBirthday,
+                                           @RequestParam(value ="mcName", required = false) String mcName){
         //创建member对象
         Member member = new Member();
-        member.setMemberCode(memberCode);
-        member.setMName(mName);
-        member.setMGender(mGender);
-        System.out.println(mGender);
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        member.setMBirthday(LocalDate.parse(mBirthday, fmt));
+        if(memberCode!=null)
+            member.setMemberCode(memberCode);
+        if(mName!=null)
+            member.setMName(mName);
+        if(mGender!=null)
+            member.setMGender(mGender);
+        if(mBirthday!=null){
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            member.setMBirthday(LocalDate.parse(mBirthday, fmt));
+        }
         member.setMcId(mcName==null?null:memberCategoryService.getIdByName(mcName));
-        //调用service进行查询
+        //调用service进行查询}
         Page<Member> list = memberService.getList(pageNum, pageSize, member);
-        List<Member> records = list.getRecords();
+        List<Member> memberList = list.getRecords();
         //封装结果
-        return ResultUtil.success(records, list.getTotal());
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("memberList", memberList);
+        return ResultUtil.success(map, list.getTotal());
     }
-
+//    @RequestParam(value = "phone") String memberCode, @RequestParam(value = "mName") String name,
+//    @RequestParam(value = "mGender") String gender, @RequestParam(value = "mBirthday"
     @RequestMapping(value = "/addMember",method = RequestMethod.POST)
     public Result<String> addMember(@RequestBody Map<String, Object> map){
         //创建member对象
+
+
+
         Member member = new Member();
-        member.setMemberCode(map.get("member_code").toString());
-        member.setMName(map.get("m_name").toString());
-        member.setMGender(map.get("m_gender").toString());
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        member.setMBirthday(LocalDate.parse(map.get("m_birthday").toString(), fmt));
-        member.setMPhone(map.get("m_phone").toString());
-        String mcName = map.get("mcName").toString();
-        member.setMcId(memberCategoryService.getIdByName(mcName));
-        Result<String> result = new Result<>();
+        member.setMemberCode(map.get("phone").toString());
+        member.setMPhone(map.get("phone").toString());
+        if(map.containsKey("name"))
+        member.setMName(map.get("name").toString());
+        if(map.containsKey("gender"))
+        member.setMGender(map.get("gender").toString());
+        if(map.containsKey("birthday")){
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            member.setMBirthday(LocalDate.parse(map.get("birthday").toString(), fmt));
+        }
+        member.setMcId(1);
         //判断是否存在
         if(memberService.memberExist(member.getMemberCode())){
             return ResultUtil.error(ResultEnum.USER_IS_EXIST);
@@ -80,36 +93,38 @@ public class MemberController {
             }
         }
     }
-
+//    @RequestParam(value = "mName") String name, @RequestParam(value = "mGender") String gender,
+//    @RequestParam(value = "mBirthday")String birthday,@RequestParam(value = "memberCode") String loginCode
     @RequestMapping(value = "/editMember", method = RequestMethod.POST)
     public Result editMember(@RequestBody Map<String, Object> map){
+
         //创建member对象
         Member member = new Member();
-        member.setMName(map.get("m_name").toString());
-        member.setMGender(map.get("m_gender").toString());
+        if(map.containsKey("name"))
+            member.setMName(map.get("name").toString());
+        if(map.containsKey("gender"))
+            member.setMGender(map.get("gender").toString());
+        if(map.containsKey("birthday")){
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        member.setMBirthday(LocalDate.parse(map.get("m_birthday").toString(), fmt));
-        member.setMPhone(map.get("m_phone").toString());
-        Long memberId = Long.valueOf(map.get("member_id").toString());
+        member.setMBirthday(LocalDate.parse(map.get("birthday").toString(), fmt));
+        }
         //判断是否修改成功
-        if(memberService.editMember(memberId, member)){
+        if(memberService.editMember(map.get("loginCode").toString(), member)){
             return ResultUtil.success();
         }
         else return ResultUtil.error(ResultEnum.UNKNOWN_ERROR);
     }
-
+//    @RequestParam(value = "memberCode") String loginCode
     @RequestMapping(value = "/deleteMember", method = RequestMethod.POST)
     public Result deleteMember(@RequestBody Map<String, Object> map){
-        String memberId = map.get("member_id").toString();
-
-        if(memberService.deleteMemberById(memberId)){
+        if(memberService.deleteMemberById(map.get("memberCode").toString())){
             return ResultUtil.success();
         }
         else return ResultUtil.error(ResultEnum.UNKNOWN_ERROR);
     }
 
     @RequestMapping(value = "getMemberByMemberCode", method = RequestMethod.GET)
-    public Result<Member> findMemberByMemberCode(@RequestParam(value = "member_code") String memberCode){
+    public Result<Member> findMemberByMemberCode(@RequestParam(value = "memberCode") String memberCode){
         Result<Member> result = new Result<>();
         Member member = memberService.getMemberByMemberCode(memberCode);
         if(member != null){
