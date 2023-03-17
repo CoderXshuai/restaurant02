@@ -1,4 +1,4 @@
-package youyanzu.seu.restaurant02.utils;
+package youyanzu.seu.restaurant02.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

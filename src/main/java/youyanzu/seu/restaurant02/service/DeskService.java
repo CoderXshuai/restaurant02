@@ -5,7 +5,9 @@ import youyanzu.seu.restaurant02.entity.Desk;
 
 /**
  * @author CoderXshuai
- * @date 2023/3/16 20:47
+ * @date 2023/3/15 14:13
  */
+
 public interface DeskService extends IService<Desk> {
+
 }

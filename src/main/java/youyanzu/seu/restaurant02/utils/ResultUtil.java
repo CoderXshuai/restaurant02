@@ -1,5 +1,6 @@
 package youyanzu.seu.restaurant02.utils;
 
+import youyanzu.seu.restaurant02.entity.Result;
 import youyanzu.seu.restaurant02.enums.ResultEnum;
 
 /**
