@@ -1,4 +1,4 @@
-package youyanzu.seu.restaurant02.controller;
+package youyanzu.seu.restaurant02.contorller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;

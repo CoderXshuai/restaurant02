@@ -1,8 +1,8 @@
-package youyanzu.seu.restaurant02.Utils;
+package youyanzu.seu.restaurant02.utils;
 
 
-import youyanzu.seu.restaurant02.Enums.ResultEnum;
 import youyanzu.seu.restaurant02.entity.Result;
+import youyanzu.seu.restaurant02.enums.ResultEnum;
 
 /**
  * Created with IDEA

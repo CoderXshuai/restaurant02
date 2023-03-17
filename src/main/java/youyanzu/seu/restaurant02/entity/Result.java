@@ -2,6 +2,7 @@ package youyanzu.seu.restaurant02.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @param <T> 返回对象类型
@@ -11,6 +12,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Result<T> {
     /**
      * 状态码
@@ -27,5 +29,5 @@ public class Result<T> {
     /**
      * 返回数据条数
      */
-    private int count;
+    private Long count;
 }
