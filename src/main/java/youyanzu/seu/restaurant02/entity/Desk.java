@@ -1,5 +1,8 @@
 package youyanzu.seu.restaurant02.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -8,11 +11,13 @@ import lombok.Data;
  */
 
 @Data
+@TableName("r_desk")
 public class Desk extends BaseBean {
     /**
      * 餐桌ID
      */
-    private int deskId;
+    @TableId(value = "desk_id", type = IdType.AUTO)
+    private Integer deskId;
     /**
      * 餐桌编号
      */

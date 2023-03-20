@@ -1,8 +1,10 @@
 package youyanzu.seu.restaurant02.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
  */
 
 @Data
-public class BaseBean {
+public class BaseBean implements Serializable {
     /**
      * 创建时间
      */
@@ -25,5 +27,7 @@ public class BaseBean {
     /**
      * 删除标志(0:未删除,1:已删除)
      */
+    @TableField(select = false)
     private int del;
+
 }

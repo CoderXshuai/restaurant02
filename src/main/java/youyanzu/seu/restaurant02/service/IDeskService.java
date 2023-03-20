@@ -8,6 +8,7 @@ import youyanzu.seu.restaurant02.entity.Desk;
  * @date 2023/3/15 14:13
  */
 
-public interface DeskService extends IService<Desk> {
+public interface IDeskService extends IService<Desk> {
+    boolean updateByCode(Desk desk);
 
 }
